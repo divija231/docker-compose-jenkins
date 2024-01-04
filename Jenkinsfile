@@ -34,6 +34,7 @@ pipeline{
       steps {
       withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPass', usernameVariable: 'divi')]){
         sh "docker login -u ${env.divi} -p ${env.dockerHubPass}"
+        sh "docker tag nginx divija231/minewithdockeryaml:latest"
         sh "docker push divija231/minewithdockeryaml:latest"
         }
       }
