@@ -28,7 +28,7 @@ pipeline{
       }
     }
     stage("pushing into docker hub"){
-      agent {
+      agent{
         label : 'jenkins'
       }
       steps {
