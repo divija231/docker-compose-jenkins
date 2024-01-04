@@ -13,6 +13,8 @@ pipeline{
       steps{
         sh "ls"
         git url : GIT , branch : BRANCH
+        sh "docker --version"
+        sh "docker-compose --version"
         sh "docker-compose -f docker-compose.yaml up -d "
         sh "ls "
         sh "docker ps -aq"        
