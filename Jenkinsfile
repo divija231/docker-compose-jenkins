@@ -7,17 +7,17 @@ pipeline{
   }
   stages{
     stage("clonning from git"){
-      steps{
-        agent{ 
+      agent{ 
           label 'jenkins'
-        }
+      }
+      steps{
         sh "ls"
         git url : GIT , branch : BRANCH
         sh "docker-compose -f docker-compose.yaml up -d "
         sh "ls "
         sh "docker ps -aq"        
       }
-    }
+  }
     stage("checking"){
       agent any 
       steps{
