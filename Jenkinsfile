@@ -11,10 +11,10 @@ pipeline{
           label 'jenkins'
       }
       steps{
-        sh "docker stop $(docker ps -aq)"
-        sh "docker rm $(docker ps -aq)"
-        sh "docker rmi $(docker images)"
-        sh "docker images "
+        sh 'docker stop $(docker ps -aq)'
+        sh 'docker rm $(docker ps -aq)'
+        sh 'docker rmi $(docker images)'
+        sh 'docker images '
       }
   }
   stages{
