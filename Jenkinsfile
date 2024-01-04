@@ -38,7 +38,7 @@ pipeline {
         label 'jenkins'
       }
       steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPass', usernameVariable: 'divi')]) {
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPass', usernameVariable: 'divi')]) {
           script {
             // Log in to Docker Hub
             sh "docker login -u ${env.divi} -p ${env.dockerHubPass}"
