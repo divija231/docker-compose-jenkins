@@ -41,10 +41,12 @@ pipeline{
         label 'jenkins'
       }
       steps {
-      withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPass', usernameVariable: 'divi')]){
-        sh "docker login -u ${env.divi} -p ${env.dockerHubPass}"
-        sh "docker tag nginx divija231/minewithdockeryaml1:latest"
-        sh "docker push divija231/minewithdockeryaml1:latest"
+      withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]){
+        // sh "docker login -u ${env.divi} -p ${env.dockerHubPass}"
+        sh "echo \$DOCKERHUB_USERNAME"
+        sh "echo \$DOCKERHUB_PASSWORD"
+        sh "docker tag nginx divija231/minewithdockeryaml1:1.0"
+        sh "docker push divija231/minewithdockeryaml1:1.0"
         }
       }
 
