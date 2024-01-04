@@ -29,7 +29,7 @@ pipeline{
     }
     stage("pushing into docker hub"){
       agent{
-        label : 'jenkins'
+        label 'jenkins'
       }
       steps {
       withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPass', usernameVariable: 'divi')]){
