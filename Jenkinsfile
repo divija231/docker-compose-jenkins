@@ -52,10 +52,5 @@ pipeline {
         }
       }
     }
-    steps("removing images"){
-      sh 'docker stop $(docker ps -aq)'
-      sh 'docker rm $(docker ps -aq)'
-      sh 'docker rmi $(docker images)'
-    }
   }
 }
