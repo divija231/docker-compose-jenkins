@@ -2,17 +2,17 @@ version: '3.8'
 services:
   srv01:
     image: centos:latest
-    name: centos1
+    # name: centos1
   web01:
     image: httpd:latest
-    name: httpd1
+    # name: httpd1
     ports:
       - '8043:80'
     volumes:
       - vengalrao:/app
   web02:
     image: nginx:latest
-    name: nginx1
+    # name: nginx1
     ports:
       - '8048:80'
   
