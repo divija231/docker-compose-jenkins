@@ -1,39 +1,55 @@
-pipeline{
+pipeline {
   agent none
-  environment{
+
+  environment {
     GIT = 'https://github.com/divija231/raow.git'
-    BRANCH ='master'
-    
+    BRANCH = 'master'
+    DOCKER_HUB_REPO = 'your-docker-hub-username/your-repo-name'
   }
-  stages{
-    stage("clonning from git"){
-      agent{ 
-          label 'jenkins'
+
+  stages {
+    stage("Cloning from Git") {
+      agent { 
+        label 'jenkins'
       }
-      steps{
-        sh "ls"
-        git url : GIT , branch : BRANCH
-        sh "docker --version"
-        sh "docker-compose --version"
-        sh "docker-compose -f docker-compose.yml up -d "
-        sh "ls "
-        sh "docker ps -aq"
-        sh "docker images"
+      steps {
+        script {
+          checkout([$class: 'GitSCM', branches: [[name: BRANCH]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: GIT]]])
+          sh "ls"
+          sh "docker --version"
+          sh "docker-compose --version"
+          sh "docker-compose -f docker-compose.yml up -d"
+          sh "ls"
+          sh "docker ps -aq"
+          sh "docker images"
+        }
       }
-  }
-    stage("checking"){
+    }
+
+    stage("Checking") {
       agent any 
-      steps{
+      steps {
         sh "docker images"
       }
     }
-    stage("pushing into docker hub"){
+
+    stage("Pushing to Docker Hub") {
       agent {
-        label : 'jenkins'
+        label 'jenkins'
       }
-      steps{
-        WithCredentials([usernamePassword(credentialsId:"dockerhub"),passwordVariable:"dockerHubPass",usernameVariable:"divi"])
-        sh "docker "
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPass', usernameVariable: 'divi')]) {
+          script {
+            // Log in to Docker Hub
+            sh "docker login -u ${env.divi} -p ${env.dockerHubPass}"
+
+            // Tag the image for Docker Hub
+            sh "docker tag centos1:latest ${DOCKER_HUB_REPO}:latest"
+
+            // Push the image to Docker Hub
+            sh "docker push ${DOCKER_HUB_REPO}:latest"
+          }
+        }
       }
     }
   }
