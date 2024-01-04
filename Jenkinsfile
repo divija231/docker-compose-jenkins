@@ -16,8 +16,7 @@ pipeline{
         sh 'docker rmi $(docker images)'
         sh 'docker images '
       }
-  }
-  stages{
+    }
     stage("clonning from git"){
       agent{ 
           label 'jenkins'
@@ -32,7 +31,7 @@ pipeline{
         sh "docker ps -q"
         sh "docker images"
       }
-  }
+    }  
     stage("checking"){
       agent any 
       steps{
