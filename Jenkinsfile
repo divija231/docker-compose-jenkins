@@ -8,7 +8,7 @@ pipeline{
   stages{
     stage("clonning from git"){
       steps{
-        node { 
+        agent{ 
           label 'jenkins'
         }
         sh "ls"
