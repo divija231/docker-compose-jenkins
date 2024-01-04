@@ -8,7 +8,9 @@ pipeline{
   stages{
     stage("clonning from git"){
       steps{
-        node { label 'jenkins'}
+        node { 
+          label 'jenkins'
+        }
         sh "ls"
         git url : GIT , branch : BRANCH
         sh "docker-compose -f docker-compose.yaml up -d "
