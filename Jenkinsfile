@@ -17,13 +17,23 @@ pipeline{
         sh "docker-compose --version"
         sh "docker-compose -f docker-compose.yml up -d "
         sh "ls "
-        sh "docker ps -aq"        
+        sh "docker ps -aq"
+        sh "docker images"
       }
   }
     stage("checking"){
       agent any 
       steps{
         sh "docker images"
+      }
+    }
+    stage("pushing into docker hub"){
+      agent {
+        label : 'jenkins'
+      }
+      steps{
+        WithCredentials([usernamePassword(credentialsId:"dockerhub"),passwordVariable:"dockerHubPass",usernameVariable:"divi"])
+        sh "docker "
       }
     }
   }
