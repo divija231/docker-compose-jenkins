@@ -6,6 +6,18 @@ pipeline{
     
   }
   stages{
+    stage("cremoving docker iamges and containers"){
+      agent{ 
+          label 'jenkins'
+      }
+      steps{
+        sh "docker stop $(docker ps -aq)"
+        sh "docker rm $(docker ps -aq)"
+        sh "docker rmi $(docker images)"
+        sh "docker images "
+      }
+  }
+  stages{
     stage("clonning from git"){
       agent{ 
           label 'jenkins'
@@ -17,7 +29,7 @@ pipeline{
         sh "docker-compose --version"
         sh "docker-compose -f docker-compose.yml up -d "
         sh "ls "
-        sh "docker ps -aq"
+        sh "docker ps -q"
         sh "docker images"
       }
   }
@@ -40,6 +52,7 @@ pipeline{
       }
 
     }
+    
   }
 }
 
