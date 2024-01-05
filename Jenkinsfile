@@ -6,7 +6,7 @@ pipeline{
     
   }
   stages{
-    stage("removing docker iamges and containers"){
+    stage("seraching for images and containers"){
       agent{ 
           label 'jenkins'
       }
